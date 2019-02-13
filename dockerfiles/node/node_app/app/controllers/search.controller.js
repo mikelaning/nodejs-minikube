@@ -7,7 +7,7 @@ const tracer = require('dd-trace').init({ service: 'node-express', // shows up a
 
 const axios = require('axios');
 const redis = require('redis');
-const client = redis.createClient('redis://demo-redis:6379');
+const client = redis.createClient('redis://redis:6379');
 // create an api/search route
 exports.search = (req, res) => {
   // Extract the query from url and trim trailing spaces

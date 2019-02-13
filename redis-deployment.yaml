@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+      annotations:
+        ad.datadoghq.com/redis.check_names: '["redis"]'
+        ad.datadoghq.com/redis.init_configs: '[{}]'
+        ad.datadoghq.com/redis.instances: '[{"host":"%%host%%", "port": "%%port%%" }]'
+        com.datadoghq.ad.logs: '[{"source": "redis", "service":"redis"}]'
+    spec:
+      containers:
+      - image: redis:4.0.10
+        name: redis
+        ports:
+        - containerPort: 6379
+          hostPort: 6379
+          name: redisport
+          protocol: TCP
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: redis
+  ports:
+  - name: "http"
+    protocol: TCP
+    port: 6379
+    targetPort: 6379

@@ -1,8 +1,4 @@
-const tracer = require('dd-trace').init({ service: 'node-express', // shows up as Service in Datadog UI
-                                        hostname: 'agent', // references the `agent` service in docker-compose.yml
-                                        env: 'datad0g.com',
-                                        plugins: true,
-                                        sampleRate: 1});
+const tracer = require('dd-trace').init({ hostname: process.env.DD_AGENT_HOST, port: process.env.DD_TRACE_AGENT_PORT});
 // Dependancies
 const express = require('express');
 // create express app
@@ -26,7 +22,7 @@ const port = process.env.PORT || 3000;
 // Mongodb
 
 // Connection URL
-const url = 'mongodb://demo-mongo:27017';
+const url = 'mongodb://mongo:27017';
 
 // Database Name
 const dbName = 'Users';
@@ -43,7 +39,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, client) {
 //mongoose.Promise = global.Promise;
 
 // Connecting to the database
-mongoose.connect('mongodb://demo-mongo:27017/Users', { useNewUrlParser: true }).then(() => {
+mongoose.connect('mongodb://mongo:27017/Users', { useNewUrlParser: true }).then(() => {
     console.log("Successfully connected to the database");
 }).catch(err => {
     console.log('Could not connect to the database. Exiting now...', err);
@@ -56,7 +52,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
 // create and connect redis client to local instance.
-const client = redis.createClient('redis://demo-redis:6379');
+const client = redis.createClient('redis://redis:6379');
 
 // Print redis errors to the console
 client.on('error', (err) => {

@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nodedemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodedemo
+  template:
+    metadata:
+      labels:
+        app: nodedemo
+      # annotations:
+      #   ad.datadoghq.com/flaskapp.check_names: '["prometheus"]'
+      #   ad.datadoghq.com/flaskapp.init_configs: '[{}]'
+      #   ad.datadoghq.com/flaskapp.instances: '[{"prometheus_url":"%%host%%/metrics","metrics":["*"],"namespace":"apple"}]'
+        # 6.5 ad.datadoghq.com/flaskapp.logs: '[{"type":"file","path":"/var/log/mylog.json","service":"flask","source":"python","sourcecategory":"sourcecode"}]'
+    spec:
+      containers:
+      - name: nodedemo
+        image: nodedemo:001
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DD_AGENT_SERVICE_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodedemo
+spec:
+  selector:
+    app: nodedemo
+  ports:
+  - name: node
+    port: 3000
+    protocol: TCP
