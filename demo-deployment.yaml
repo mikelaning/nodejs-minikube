@@ -24,7 +24,7 @@ spec:
         ports:
         - containerPort: 3000
         env:
-        - name: DD_AGENT_SERVICE_HOST
+        - name: DD_AGENT_HOST
           valueFrom:
             fieldRef:
               fieldPath: status.hostIP

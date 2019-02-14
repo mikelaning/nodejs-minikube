@@ -9,7 +9,7 @@ spec:
         app: datadog-agent
       name: datadog-agent
     spec:
-      hostNetwork: true
+      serviceAccountName: datadog-agent
       containers:
       - image: datadog/agent:6.4.1
         imagePullPolicy: Always
@@ -27,15 +27,8 @@ spec:
           - name: DD_APM_ENABLED
             value: "true"
           - name: DD_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: datadog-api
-                key: token
+            value: "73320a11a32a33deab5858a6a46440e0"
           - name: DD_PROCESS_AGENT_ENABLED
-            value: "true"
-          - name: DD_COLLECT_KUBERNETES_EVENTS
-            value: "true"
-          - name: DD_LEADER_ELECTION
             value: "true"
           - name: DD_TAGS
             value: "owner:mike"
@@ -45,6 +38,12 @@ spec:
             value: "true"
           - name: DD_DOGSTATSD_NON_LOCAL_TRAFFIC
             value: "true"
+          - name: KUBERNETES
+            value: "yes"
+          - name: DD_KUBERNETES_KUBELET_HOST
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
           # - name: DD_PROXY_HOST
           #   value: 1.2.34
           # - name: DD_PROXY_PORT
