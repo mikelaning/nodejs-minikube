@@ -12,10 +12,10 @@ spec:
       labels:
         app: redis
       annotations:
-        ad.datadoghq.com/redis.check_names: '["redis"]'
+        ad.datadoghq.com/redis.check_names: '["redisdb"]'
         ad.datadoghq.com/redis.init_configs: '[{}]'
         ad.datadoghq.com/redis.instances: '[{"host":"%%host%%", "port": "%%port%%" }]'
-        com.datadoghq.ad.logs: '[{"source": "redis", "service":"redis"}]'
+        ad.datadoghq.com/redis.logs: '[{"source": "redisdb", "service":"redisdb"}]'
     spec:
       containers:
       - image: redis:4.0.10
@@ -23,7 +23,7 @@ spec:
         ports:
         - containerPort: 6379
           hostPort: 6379
-          name: redisport
+          name: redisport 
           protocol: TCP
 
 

@@ -14,10 +14,10 @@ spec:
       labels:
         app: mongo
       annotations:
-        ad.datadoghq.com/mongo.check_names: '["mongo"]'
-        ad.datadoghq.com/mongo.init_configs: '[{}]'
-        ad.datadoghq.com/mongo.instances: '[{"host": "%%host%%", "port": "%%port%%","username": "datadog","password": "datadog" }]'
-        com.datadoghq.ad.logs: '[{"source": "mongo", "service":"mongo"}]'
+        #ad.datadoghq.com/mongo.check_names: '["mongo"]'
+        #ad.datadoghq.com/mongo.init_configs: '[{}]'
+        #ad.datadoghq.com/mongo.instances: '[{"host": "%%host%%", "port": "%%port%%","username": "datadog","password": "datadog" }]'
+        #ad.datadoghq.com/mongo.logs: '[{"source": "mongodb", "service":"mongo"}]'
     spec:
       containers:
       - image: mongo:latest
