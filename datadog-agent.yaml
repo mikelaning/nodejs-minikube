@@ -27,7 +27,7 @@ spec:
           - name: DD_APM_ENABLED
             value: "true"
           - name: DD_API_KEY
-            value: "73320a11a32a33deab5858a6a46440e0"
+            value: "<redact>"
           - name: DD_PROCESS_AGENT_ENABLED
             value: "true"
           - name: DD_TAGS
